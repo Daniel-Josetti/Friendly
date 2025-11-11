@@ -1,0 +1,147 @@
+/* ==========================
+   RESET / BASE
+========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    color: #333;
+    padding-bottom: 50px;
+}
+
+/* ==========================
+   NAVBAR
+========================== */
+header {
+    background: #1a73e8;
+    padding: 15px 0;
+    margin-bottom: 40px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 85%;
+    margin: auto;
+    color: white;
+}
+
+.navbar .logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.navbar h3 {
+    font-weight: normal;
+    opacity: .9;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 6px 10px;
+    transition: .2s;
+}
+
+.nav-links li a:hover {
+    background: #1459b3;
+    border-radius: 5px;
+}
+
+.logout {
+    background: #e63946;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.logout:hover {
+    background: #c82d38;
+}
+
+/* ==========================
+   SECTION BASE (para admin)
+========================== */
+section {
+
+    width: 400px;
+    margin: auto;
+    margin-top: 40px;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00000018;
+}
+
+/* ==========================
+   FORMS
+========================== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+form h5 {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: -5px;
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+input:focus, select:focus {
+    border-color: #1a73e8;
+    outline: none;
+}
+
+button, input[type="submit"] {
+    padding: 10px;
+    border: none;
+    background: #1a73e8;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover, input[type="submit"]:hover {
+    background: #155ec7;
+}
+
+/* ==========================
+   TITLES
+========================== */
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* ==========================
+   ADMIN MESSAGE
+========================== */
+p {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #1a73e8;
+}
