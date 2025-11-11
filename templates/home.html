@@ -7,13 +7,28 @@
 </head>
 <body>
     <header>
-        <h2>Friendly</h2> <!-- Cabeçalho do site -->
-        <h4>Safety first</h4>
+        <nav class="navbar">
+            <div class="logo">Friendly</div>
 
-        <h2> Hello { current_user.nome } </h2>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/groups">Groups</a></li>
+                <li><a href="/messages">Messages</a></li>
 
-
-        <a href="/home"> Home </a> 
+                {% if current_user.is_authenticated %}
+                    {% if current_user.cargo == 'admin' %}
+                        <li><a href="/admindashboard">Admin Dashboard</a></li>
+                    {% elif current_user.cargo == 'teacher' %}
+                        <li><a href="/moderate">Moderate</a></li>
+                    {% endif %}
+                    <li><a href="/profile">Profile</a></li>
+                    <li><a href="/logout" class="logout">Logout</a></li>
+                {% else %}
+                    <h2>You are not authenticated! Login Now!</h2>
+                    <li><a href="/login">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
     </header>
 </body>
 </html>

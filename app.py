@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
-from flask_login import LoginManager, current_user, login_user, login_required
+from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from models import Users
 from db import db
+import hashlib
 
 app = Flask(__name__)
 app.secret_key = 'MoritzZimmerman'
@@ -10,6 +11,9 @@ lm.login_view = 'login'
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
 db.init_app(app)
 
+def hash(txt):
+    hash_obj = hashlib.sha256(txt.encode('utf-8'))
+    return hash_obj.hexdigest()
 
 @lm.user_loader
 def user_loader(id):
@@ -32,7 +36,7 @@ def register():
         senha = request.form["senhaForm"]
 
 
-        novo_usuario = Users(nome=nome, senha=senha)
+        novo_usuario = Users(nome=nome, senha=hash(senha))
         db.session.add(novo_usuario)
         db.session.commit()
 
@@ -52,7 +56,7 @@ def login():
         nome = request.form['nomeForm']
         senha = request.form['senhaForm']
 
-        user = db.session.query(Users).filter_by(nome=nome, senha=senha).first()
+        user = db.session.query(Users).filter_by(nome=nome, senha=hash(senha)).first()
         if not user:
             return "Usuario não autorizado. Nome ou senha incorretos"
         
@@ -60,6 +64,10 @@ def login():
         return redirect(url_for('home'))
 
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
 
 
 
