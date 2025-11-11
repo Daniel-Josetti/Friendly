@@ -34,6 +34,7 @@ def register():
     elif request.method == "POST":
         nome = request.form["nomeForm"]
         senha = request.form["senhaForm"]
+        cargo = request.form["cargoForm"]
 
 
         novo_usuario = Users(nome=nome, senha=hash(senha))
@@ -64,10 +65,35 @@ def login():
         return redirect(url_for('home'))
 
 
+@app.route('/admindashboard', methods=['GET', 'POST'])
+def admindash():
+    if current_user.cargo != 'admin':
+         return 'Usuário não autorizado!'
+
+    if request.method == "POST":
+        nome = request.form["nomeForm"]
+        senha = request.form["senhaForm"]
+        cargo = request.form["cargoForm"]
+
+
+        novo_usuario = Users(nome=nome, senha=hash(senha), cargo=cargo)
+        db.session.add(novo_usuario)
+        db.session.commit()
+
+        
+    
+    return render_template('admindashboard.html')
+
+    
+
+
+
+
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
+    return redirect(url_for('login'))
 
 
 
@@ -75,4 +101,7 @@ def logout():
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
+        if not Users.query.filter_by(nome='admin').first():
+            db.session.add(Users(nome='admin', senha=hash('admin123'), cargo='admin'))
+            db.session.commit()
     app.run(debug=True)
