@@ -3,6 +3,7 @@ from flask_login import LoginManager, current_user, login_user, login_required, 
 from models import Users
 from db import db
 import hashlib
+from waitress import serve
 
 app = Flask(__name__)
 app.secret_key = 'MoritzZimmerman'
@@ -27,27 +28,7 @@ def home():
     return render_template("home.html")
 
 
-@app.route('/register', methods=["GET", "POST"])
-def register():
-    if request.method == "GET":
-        return render_template('register.html')
-    elif request.method == "POST":
-        nome = request.form["nomeForm"]
-        senha = request.form["senhaForm"]
-        cargo = request.form["cargoForm"]
 
-
-        novo_usuario = Users(nome=nome, senha=hash(senha))
-        db.session.add(novo_usuario)
-        db.session.commit()
-
-        login_user(novo_usuario)
-
-
-
-
-        return redirect(url_for("home"))
-    
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -104,4 +85,4 @@ if __name__ == "__main__":
         if not Users.query.filter_by(nome='admin').first():
             db.session.add(Users(nome='admin', senha=hash('admin123'), cargo='admin'))
             db.session.commit()
-    app.run(debug=True)
+    serve(app, host='0.0.0.0', port=80)
