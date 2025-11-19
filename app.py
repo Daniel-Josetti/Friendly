@@ -85,4 +85,4 @@ if __name__ == "__main__":
         if not Users.query.filter_by(nome='admin').first():
             db.session.add(Users(nome='admin', senha=hash('admin123'), cargo='admin'))
             db.session.commit()
-    serve(app, host='0.0.0.0', port=80)
+    app.run(debug=True)
